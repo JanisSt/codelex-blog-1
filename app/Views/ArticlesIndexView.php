@@ -6,6 +6,10 @@
             <?php echo $article->title(); ?>
         </a>
     </h3>
+    <form method="post" action="/articles/<?php echo $article->id(); ?>">
+        <input type="hidden" name="_method" value="DELETE" />
+        <button type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+    </form>
     <p><?php echo $article->content(); ?></p>
     <p>
         <small>
