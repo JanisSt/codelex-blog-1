@@ -31,16 +31,27 @@ function query(): QueryBuilder
     return database()->createQueryBuilder();
 }
 
-$dispatcher = FastRoute\simpleDispatcher(function(FastRoute\RouteCollector $r) {
+$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $namespace = '\App\Controllers\\';
 
     $r->addRoute('GET', '/', $namespace . 'ArticlesController@index');
 
-    $r->addRoute('GET', '/articles', $namespace . 'ArticlesController@index');
+    $r->addRoute('GET', '/articles/', $namespace . 'ArticlesController@index');
+    $r->addRoute('GET', '/articles/create', $namespace . 'ArticlesController@create');
+    $r->addRoute('POST', '/articles', $namespace . 'ArticlesController@add');
+
+    $r->addRoute('GET', '/articles/{id}/edit', $namespace . 'ArticlesController@edit');
+    $r->addRoute('PUT', '/articles/{id}', $namespace . 'ArticlesController@update');
+
+
     $r->addRoute('GET', '/articles/{id}', $namespace . 'ArticlesController@show');
     $r->addRoute('DELETE', '/articles/{id}', $namespace . 'ArticlesController@delete');
 
     $r->addRoute('POST', '/articles/{id}/comments', $namespace . 'CommentsController@store');
+
+
+    //$r->addRoute('POST', '/articles', $namespace . 'ArticlesController@loginNew');ArticlesCreateView
+
 });
 
 // Fetch method and URI from somewhere
@@ -56,11 +67,14 @@ $uri = rawurldecode($uri);
 $routeInfo = $dispatcher->dispatch($httpMethod, $uri);
 switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::NOT_FOUND:
-        echo '404 PAGE NOT FOUND';
+        echo '404 PAGE NOT FOUND' . PHP_EOL;
+        echo '<a href="/">Back</a>';
         break;
     case FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
         $allowedMethods = $routeInfo[1];
-        echo 'METHOD NOT ALLOWED';
+        echo 'METHOD NOT ALLOWED' . PHP_EOL;
+        echo '<a href="/">Back</a>';
+
         break;
     case FastRoute\Dispatcher::FOUND:
         [$controller, $method] = explode('@', $routeInfo[1]);
