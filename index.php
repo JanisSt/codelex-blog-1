@@ -50,6 +50,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('DELETE', '/articles/{id}', $namespace . 'ArticlesController@delete');
 
     $r->addRoute('POST', '/articles/{id}/comments', $namespace . 'CommentsController@store');
+    $r->addRoute('DELETE', '/articles/{id}/comments/delete', $namespace . 'CommentsController@delete');
 
 
     $r->addRoute('GET', '/register', $namespace . 'RegisterController@showRegistrationForm');

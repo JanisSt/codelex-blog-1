@@ -12,9 +12,20 @@
 <?php if (! empty($comments)): ?>
     <ul>
         <?php foreach ($comments as $comment): ?>
+
+
+
             <li>
                 <b><?php echo $comment->name() ?></b> <?php echo $comment->content(); ?>
                 <small><?php echo $comment->createdAt(); ?></small>
+
+                <form method="post" action="/articles/<?php echo $article->id(); ?>/comments/delete">
+                    <input type="hidden" name="_method" value="DELETE"/>
+                    <input type="hidden" name="com_id" value="<?php echo $comment->Id() ?>"/>
+
+                    <button type="submit" onclick="return confirm('Are you sure?');">Delete</button>
+                </form>
+
             </li>
         <?php endforeach; ?>
     </ul>

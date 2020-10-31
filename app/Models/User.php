@@ -7,28 +7,22 @@ class User
     private string $name;
     private string $email;
     private string $password;
-    private string $ref;
-    private ?int $ref_count;
+    private ?int $referredBy;
     private ?int $id;
-
 
     public function __construct(
         string $name,
         string $email,
         string $password,
-        string  $ref,
-        ?int  $ref_count = null,
+        ?string $referredBy = null,
         ?int $id = null
-
     )
     {
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
-        $this->ref = md5($email);
-        $this->ref_count = $ref_count;
+        $this->referredBy = $referredBy;
         $this->id = $id;
-
     }
 
     public static function create(array $data): User
@@ -37,9 +31,7 @@ class User
             $data['name'],
             $data['email'],
             password_hash($data['password'], PASSWORD_BCRYPT),
-            $data['reff'],
-            $data['reff_count'],
-
+            $data['referred_by']
         );
     }
 
@@ -49,14 +41,7 @@ class User
             'name' => $this->name,
             'email' => $this->email,
             'password' => $this->password,
-            'reff' =>$this->ref,
-            'reff_count'=>$this->ref_count
+            'referred_by' => $this->referredBy,
         ];
     }
-
-    public function UserID()
-    {
-        return $this->email;
-    }
-
 }
