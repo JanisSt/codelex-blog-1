@@ -1,3 +1,19 @@
+<?php if (isset($_SESSION['auth_id'])): ?>
+<form method="post" action="/logout">
+    <button type="submit">Logout</button>
+</form>
+
+<?php endif; ?>
+
+<?php if (!isset($_SESSION['auth_id'])): ?>
+    <form method="post" action="/register">
+        <button type="submit">Register</button>
+    </form>
+    <form method="post" action="/login">
+        <button type="submit">Login</button>
+    </form>
+<?php endif; ?>
+
 <h1>Articles</h1>
 <a href="articles/create">Add new</a>
 <?php foreach ($articles as $article): ?>

@@ -6,6 +6,8 @@ use Doctrine\DBAL\Query\QueryBuilder;
 
 require_once 'vendor/autoload.php';
 
+session_start();
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
@@ -49,6 +51,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
     $r->addRoute('POST', '/articles/{id}/comments', $namespace . 'CommentsController@store');
 
+
+    $r->addRoute('GET', '/register', $namespace . 'RegisterController@showRegistrationForm');
+    $r->addRoute('POST', '/register', $namespace . 'RegisterController@register');
+
+    $r->addRoute('GET', '/login', $namespace . 'LoginController@showLoginForm');
+    $r->addRoute('POST', '/login', $namespace . 'LoginController@login');
+    $r->addRoute('POST', '/logout', $namespace . 'LoginController@logout');
 
     //$r->addRoute('POST', '/articles', $namespace . 'ArticlesController@loginNew');ArticlesCreateView
 
